@@ -1,7 +1,7 @@
 # exps
 
 
-		If you don't know it, please try it.  Just for research
+		Just do it! 
 		
 ----
 Content
@@ -10,13 +10,14 @@ Content
 
 The datasets used by multiple experiments.
 
-	1. objects:
-	I collect serveral sketchup model from the 3D 	warehourse. And all 3d models have been resized to the real scale. The bottom cnter of each model is aligned to the origin.
+1. objects:
+
+	This is dataset of 3D object models. I collect them from the 3D google warehourse. And I have resized them to the real scale and algined their bottom centers to the origin.
 	
 	
 ### exp20150201
 
-Try to apply spike-coding to surface representation.
+Apply the spike-coding algorithm to 3D surface representation.
 
 
 		
