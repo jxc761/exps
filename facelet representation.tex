@@ -1,0 +1,97 @@
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{Facelet Representation for 3d Surface}
+\author{Jing Chen}
+%\date{} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+\begin{document}
+\maketitle
+
+
+As I said in our meeting, the surface is still defined in a viewer-centered way here. It is determined by its distance to camera. 
+
+
+That means we describe the 3D surface in the camera coordinate system. The following figure illustrate the meaning of camera coordinate and camera plane. 
+
+Mathematically, the camera coordinate system is aligned with the ``axes'' of the camera(target, up and right). Specifically, the origin of this system is at the camera position, y-axis directs the up of the camera, z-axis points from the camera to the focus and y-axis is orthogonal to xz plane. The camera plane means xy plane in this coordinate system. So the surface in the view is a function, $s(x, y)$ defined on xy plane. 
+
+Facelets, ${f_i}$, are a set of functions on the xy plane. They code any surface $s(x, y)$ as follows.
+	s(x, y)= \max{ c_i \f_i(x- \delta x_i, y - \delta y_i) }
+ 
+The basic idea is illustrated in the following figure. Let's say $S$  is the surface we want to represent and $F_i$ and $F_j$ are two facelets. 
+F(x, y)
+
+The motivation of using min operation rather than a linear combination of basis functions is that the physical meaning of facelets is a piece of surface. If F_i less than F_j at (x, y) may mean the F_i is in the front of F_j. To combine them together, we should do "min" operation rather than to do "add" operation. The motivate of using \delta x_i is similar to the Spike Coding. 
+
+Here we need to address two problems: (1) learning(determine the optimal kernel functions,i.e. facelets) (2) encoding (determining the optimal values of c_i, x_i, y_i).
+
+To simplify the model, we use the soft maximum function to approximate the "min" operation.
+
+S(x, y) = \max{ c_i  \f_i(x- \delta x_i, y - \delta y_i) }
+				\approx \log( \sum \exp ( c_i  \f_i(x- \delta x_i, y - \delta y_i) ) }
+				= \log( \sum s_i \exp ( f_i(x- \delta x_i, y - \delta y_i) ) }
+
+
+To learning the basis function, we are trying to solve this optimization problem:
+
+E = <S - \log( \sum s_i \exp ( F_i(x- \delta x_i, y - \delta y_i) ) } > + sp(a_i)
+
+\end{document}
+
+
+
+
+
+
+
+
+
+

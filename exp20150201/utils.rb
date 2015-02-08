@@ -15,5 +15,6 @@ def mt_ray_test(rays, model)
   end
   
   threads.each { |thr| thr.join }
+  
   return items
 end
