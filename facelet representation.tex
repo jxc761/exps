@@ -64,18 +64,18 @@ That means we describe the 3D surface in the camera coordinate system. The follo
 Mathematically, the camera coordinate system is aligned with the ``axes'' of the camera(target, up and right). Specifically, the origin of this system is at the camera position, y-axis directs the up of the camera, z-axis points from the camera to the focus and y-axis is orthogonal to xz plane. The camera plane means xy plane in this coordinate system. So the surface in the view is a function, $s(x, y)$ defined on xy plane. 
 
 Facelets, ${f_i}$, are a set of functions on the xy plane. They code any surface $s(x, y)$ as follows.
-	s(x, y)= \max{ c_i \f_i(x- \delta x_i, y - \delta y_i) }
+	$$s(x, y) &= \max \{ c_i f_i(x- \Delta x_i, y - \Delta y_i) \}$$
  
-The basic idea is illustrated in the following figure. Let's say $S$  is the surface we want to represent and $F_i$ and $F_j$ are two facelets. 
-F(x, y)
 
-The motivation of using min operation rather than a linear combination of basis functions is that the physical meaning of facelets is a piece of surface. If F_i less than F_j at (x, y) may mean the F_i is in the front of F_j. To combine them together, we should do "min" operation rather than to do "add" operation. The motivate of using \delta x_i is similar to the Spike Coding. 
+The motivation of using min operation rather than a linear combination of basis functions is that the physical meaning of facelets is a piece of surface. If $f_i$ less than $f_j$ at $(x, y)$ may mean the $f_i$ is in the front of $f_j$. To combine them together, we should do "min" operation rather than to do "add" operation. The motivate of using $(\Delta x_i, \Delta y_i)$ is similar to the Spike Coding. 
+
+The basic idea is illustrated in the following figure. Let's say $s$ is the surface we want to represent and $f_i$ and $f_j$ are two facelets. 
 
 Here we need to address two problems: (1) learning(determine the optimal kernel functions,i.e. facelets) (2) encoding (determining the optimal values of c_i, x_i, y_i).
 
 To simplify the model, we use the soft maximum function to approximate the "min" operation.
 
-S(x, y) = \max{ c_i  \f_i(x- \delta x_i, y - \delta y_i) }
+s(x, y) = \max{ c_i  \f_i(x- \delta x_i, y - \delta y_i) }
 				\approx \log( \sum \exp ( c_i  \f_i(x- \delta x_i, y - \delta y_i) ) }
 				= \log( \sum s_i \exp ( f_i(x- \delta x_i, y - \delta y_i) ) }
 

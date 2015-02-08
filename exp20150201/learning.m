@@ -1,23 +1,30 @@
 
+close all
+clear
+clc
 
 data = load('./cached/nyu/living_room_depths.mat');
-org_depth = data.depths;
+org_depths = double(data.depths);
 
 
-% normalize them to [-1, 0]
-ma = max(org_depth(:));
-mi = min(org_depth(:));
-depths =1-double((org_depth - mi) ./ ma );
-depths = depths * 100;
+% normalize them to [0, 1]
+depths = zeros(size(org_depths));
+for j = 1 : size(org_depths, 3)
+    cur = org_depths(:, :, j);
+    ma  = max(cur(:));
+    mi  = min(cur(:));
+    depths(:, :, j) = 1 - double((cur - mi) ./ (ma - mi) );
+    % disp([j, ma, mi]);
+end
+%depths = max(org_depths(:)) - org_depths ;
 
+
+
+opts.maxIt = 100;
 opts.patch_sz = 16;
 opts.M = 64;
-opts.params_basis.method='lbfgs';
-opts.params_coeff.optTol = 1e-7;
-opts.params_coeff.order = 1;
 opts.batch_size=1000;
-opts.maxIt = 100;
 
-opts.lambda = ones( opts.M*opts.batch_size, 1);
+%opts.lambda = ones( opts.M*opts.batch_size, 1);
 
 [F, C] = em_learning(depths, opts);
