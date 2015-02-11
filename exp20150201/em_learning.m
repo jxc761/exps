@@ -23,16 +23,19 @@ params_coeff = opts.params_coeff;
 params_basis = opts.params_basis;
 
 % initialize
-F = zeros(L, M);
-for i=1:M
-    % choose an image for this batch
-    ind=ceil(num_images*rand);
-    this_image=data(:,:,ind);
-    r=buff+ceil((height-psz-2*buff)*rand);
-    c=buff+ceil((width-psz-2*buff)*rand);
-    F(:,i)=reshape(this_image(r:r+psz-1,c:c+psz-1), L, 1);
-end
-% F = rand(L, M);
+% F = zeros(L, M);
+% for i=1:M
+%     % choose an image for this batch
+%     ind=ceil(num_images*rand);
+%     this_image=data(:,:,ind);
+%     r=buff+ceil((height-psz-2*buff)*rand);
+%     c=buff+ceil((width-psz-2*buff)*rand);
+%     F(:,i)=reshape(this_image(r:r+psz-1,c:c+psz-1), L, 1);
+% end
+% % F = rand(L, M);
+
+F = greedy_learning(data, opts);
+
 C = zeros(M, N);
 
 %C = rand(M, N);

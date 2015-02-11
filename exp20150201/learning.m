@@ -27,4 +27,5 @@ opts.batch_size=1000;
 
 %opts.lambda = ones( opts.M*opts.batch_size, 1);
 
-[F, C] = em_learning(depths, opts);
+F = em_learning(depths, opts);
+%F = greedy_learning(depths, opts);
