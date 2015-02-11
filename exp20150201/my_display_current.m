@@ -1,5 +1,5 @@
-function my_display_current(c, s, B)
-x  = 0.1 : 0.1 : 2;
+function my_display_current(x, c, s, B)
+%x  = 0.1 : 0.1 : 2;
 b1 = B(:, 1);
 b2 = B(:, 2);
 
