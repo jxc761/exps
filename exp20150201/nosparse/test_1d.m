@@ -19,6 +19,7 @@ basis = [b1; b2]';
 
 coeff = [1, 1, 1.5; 1, 1.5, 1];
 c = convex_learning(y3, basis);
+
 my_display_current(x, c, y3, basis);
 
 

@@ -11,5 +11,3 @@ function display_basis(A, numb)
 %    S_var = vector of coefficient variances
 %    h = display handle (optional)
 
-figure(numb);
-display_array(A, numb);

@@ -1,9 +1,12 @@
-function [f, g, H] =  obj_c(c, s, B, opts)
+%%%
+% f(c, s, B) = sum_l \| max_j {B(l, j) c_j} - s_l \|^2
+% 
+%
+function [f, g, H] =  obj_fun(c, s, B)
+
 c=c(:);
 s=s(:);
 
-sigma = opts.sigma;
-lambda = opts.lambda;
 
 [L, M] = size(B);
 
@@ -11,11 +14,7 @@ g = zeros(M, 1);
 H = zeros(M, M);
 f = 0;
 
-c2 = c.^2;
-f = f + lambda * sum( log(1.0 +  c2 ./sigma^2) );
 
-g = g + (2 * lambda * c2) ./(sigma^2 + c2) ;
-H = H + diag( (4 * lambda * sigma^2 * c) ./ ( (sigma^2 + c2).^2 ) );
 for l = 1 : L
     b = B(l, :)';
     sl  = max(c .* b);
@@ -37,5 +36,6 @@ for l = 1 : L
         end
     end
 end
+
 
 end
